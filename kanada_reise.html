@@ -1303,16 +1303,6 @@ function closeLightbox() {
   } catch(_){}
 })();
 
-const headers = {
-  'apikey': SUPABASE_KEY,
-  'Authorization': 'Bearer ' + SUPABASE_KEY,
-  'Content-Type': 'application/json',
-  'Prefer': 'return=representation'
-};
-
-let currentUser = null;
-let pendingPhotos = [];
-
 
 const cards = document.querySelectorAll('.day-card');
 const obs = new IntersectionObserver(function(entries) {
