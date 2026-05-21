@@ -254,6 +254,49 @@ footer strong { color:var(--red); }
   .day-num::after { right:-1.2rem; }
   .map-wrapper { height:420px; }
 }
+
+/* INLINE DIARY IN TIMELINE */
+.day-diary { grid-column:2; margin-bottom:.6rem; }
+.day-diary-entries { display:flex; flex-direction:column; gap:.5rem; margin-bottom:.5rem; }
+.inline-entry { background:linear-gradient(135deg,#f0fff4,#e8f8f5); border-left:3px solid var(--forest);
+  border-radius:0 7px 7px 0; padding:.7rem 1rem; font-size:.82rem; color:#2c3e50; }
+.inline-entry-header { display:flex; align-items:center; gap:.5rem; margin-bottom:.3rem; flex-wrap:wrap; }
+.inline-entry-author { font-weight:700; color:var(--forest); }
+.inline-entry-weather { font-size:1rem; }
+.inline-entry-loc { font-size:.73rem; color:#888; font-style:italic; }
+.inline-entry-time { font-size:.7rem; color:#aaa; margin-left:auto; }
+.inline-entry-text { line-height:1.55; color:#444; white-space:pre-wrap; }
+.inline-entry-photos { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.5rem; }
+.inline-entry-photo { width:80px; height:60px; object-fit:cover; border-radius:5px;
+  border:2px solid rgba(45,106,79,.2); cursor:pointer; transition:transform .2s; }
+.inline-entry-photo:hover { transform:scale(1.06); }
+.btn-diary-toggle { background:none; border:1px dashed rgba(45,106,79,.4); border-radius:6px;
+  color:var(--forest); font-size:.75rem; padding:.3rem .8rem; cursor:pointer;
+  font-family:'Outfit',sans-serif; transition:all .2s; display:flex; align-items:center; gap:.4rem; }
+.btn-diary-toggle:hover { background:rgba(45,106,79,.08); border-color:var(--forest); }
+.inline-form { background:#f5fdf8; border:1px solid rgba(45,106,79,.2); border-radius:8px;
+  padding:.9rem; margin-top:.5rem; display:none; }
+.inline-form.open { display:block; }
+.inline-form textarea { width:100%; background:#fff; border:1px solid #d0e8d8; border-radius:6px;
+  padding:.6rem .8rem; font-size:.83rem; font-family:'Outfit',sans-serif; resize:vertical;
+  min-height:80px; outline:none; color:#333; margin-bottom:.6rem; }
+.inline-form textarea:focus { border-color:var(--forest); }
+.inline-form-row { display:flex; gap:.5rem; align-items:center; flex-wrap:wrap; }
+.inline-form select { background:#fff; border:1px solid #d0e8d8; border-radius:6px;
+  padding:.4rem .7rem; font-size:.8rem; font-family:'Outfit',sans-serif; color:#333; outline:none; }
+.inline-form select:focus { border-color:var(--forest); }
+.btn-inline-save { background:var(--forest); color:#fff; border:none; border-radius:6px;
+  padding:.4rem 1rem; font-size:.8rem; font-family:'Outfit',sans-serif; cursor:pointer;
+  font-weight:600; transition:background .2s; }
+.btn-inline-save:hover { background:#1e4d38; }
+.btn-inline-cancel { background:none; border:1px solid #ccc; border-radius:6px;
+  padding:.4rem .8rem; font-size:.78rem; font-family:'Outfit',sans-serif; color:#888; cursor:pointer; }
+.inline-photo-label { display:flex; align-items:center; gap:.3rem; background:#fff;
+  border:1px dashed #aaa; border-radius:6px; padding:.35rem .7rem; cursor:pointer;
+  color:#888; font-size:.76rem; }
+.inline-photo-label input { display:none; }
+.inline-status { font-size:.75rem; color:var(--forest); margin-left:.5rem; }
+.diary-login-hint { font-size:.75rem; color:#aaa; font-style:italic; padding:.3rem 0; }
 </style>
 </head>
 <body>
@@ -315,150 +358,150 @@ footer strong { color:var(--red); }
   <p class="timeline-sub">26. Juni – 17. Juli 2026</p>
   <div class="timeline-wrap"><div class="timeline">
 
-    <div class="day-card">
+    <div class="day-card" data-day="1" id="day-card-1">
       <div class="day-num"><div class="num">1</div><div class="wday">Fr</div><div class="ddate">26. Jun</div></div>
       <div class="day-content"><span class="tag tag-arrive">✈ Ankunft</span>
         <div class="day-location">✈ Vancouver YVR → ⛴ Fähre → Nanaimo</div>
         <div class="day-note">Ankunft aus Deutschland 11:20 Uhr am YVR. Fahrt nach Tsawwassen oder Horseshoe Bay → BC-Fähre nach Nanaimo (ca. 1h 40min). 🍁 Willkommen in Kanada!</div>
-        <div class="day-hotel">🏨 Ramada by Wyndham Nanaimo</div></div></div>
+        <div class="day-hotel">🏨 Ramada by Wyndham Nanaimo</div></div><div class="day-diary" id="diary-day-1"><div class="day-diary-entries" id="diary-entries-1"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="2" id="day-card-2">
       <div class="day-num"><div class="num">2</div><div class="wday">Sa</div><div class="ddate">27. Jun</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 Fahrt</span>
         <div class="day-location">Nanaimo → Ucluelet</div>
         <div class="day-note">Fahrt über Highway 4 ans Westküstenende der Insel durch den Regenwald. Erste Pazifik-Luft! 🌊</div>
-        <div class="day-hotel">🏨 Pacific Rim Motel (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Pacific Rim Motel (2 Nächte)</div></div><div class="day-diary" id="diary-day-2"><div class="day-diary-entries" id="diary-entries-2"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="3" id="day-card-3">
       <div class="day-num"><div class="num">3</div><div class="wday">So</div><div class="ddate">28. Jun</div></div>
       <div class="day-content stay"><span class="tag tag-explore">🌊 Erkunden</span>
         <div class="day-location">Ucluelet & Pacific Rim National Park</div>
-        <div class="day-note">Wild Pacific Trail, Long Beach, Whale Watching, Surfen in Tofino. 🐋🦅</div></div></div>
+        <div class="day-note">Wild Pacific Trail, Long Beach, Whale Watching, Surfen in Tofino. 🐋🦅</div></div><div class="day-diary" id="diary-day-3"><div class="day-diary-entries" id="diary-entries-3"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="4" id="day-card-4">
       <div class="day-num"><div class="num">4</div><div class="wday">Mo</div><div class="ddate">29. Jun</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 243 km</span>
         <div class="day-location">Ucluelet → Campbell River</div>
         <div class="day-note">Fahrt durch die Mitte der Insel nordwärts. Urwald, Berge, Seen! 🌲🍁</div>
-        <div class="day-hotel">🏨 Above Tide Motel (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Above Tide Motel (2 Nächte)</div></div><div class="day-diary" id="diary-day-4"><div class="day-diary-entries" id="diary-entries-4"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="5" id="day-card-5">
       <div class="day-num"><div class="num">5</div><div class="wday">Di</div><div class="ddate">30. Jun</div></div>
       <div class="day-content stay"><span class="tag tag-explore">🦅 Erkunden</span>
         <div class="day-location">Campbell River – Lachshauptstadt</div>
-        <div class="day-note">Angeln, White-Water Rafting, Strathcona Provincial Park, Weißkopfseeadler. 🎣🦅</div></div></div>
+        <div class="day-note">Angeln, White-Water Rafting, Strathcona Provincial Park, Weißkopfseeadler. 🎣🦅</div></div><div class="day-diary" id="diary-day-5"><div class="day-diary-entries" id="diary-entries-5"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="6" id="day-card-6">
       <div class="day-num"><div class="num">6</div><div class="wday">Mi</div><div class="ddate">1. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 195 km</span>
         <div class="day-location">Campbell River → Port McNeill</div>
         <div class="day-note">Weiterfahrt nordwärts durch unberührte Wälder. 🌲🐻</div>
-        <div class="day-hotel">🏨 Humpback Inn (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Humpback Inn (2 Nächte)</div></div><div class="day-diary" id="diary-day-6"><div class="day-diary-entries" id="diary-entries-6"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="7" id="day-card-7">
       <div class="day-num"><div class="num">7</div><div class="wday">Do</div><div class="ddate">2. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">🐋 Orca-Tag!</span>
         <div class="day-location">Port McNeill & Telegraph Cove</div>
-        <div class="day-note">Telegraph Cove – historisches Fischerdorf & bestes Orca Whale Watching Kanadas! 🐋🐋🐋</div></div></div>
+        <div class="day-note">Telegraph Cove – historisches Fischerdorf & bestes Orca Whale Watching Kanadas! 🐋🐋🐋</div></div><div class="day-diary" id="diary-day-7"><div class="day-diary-entries" id="diary-entries-7"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="8" id="day-card-8">
       <div class="day-num"><div class="num">8</div><div class="wday">Fr</div><div class="ddate">3. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 Fahrt</span>
         <div class="day-location">Port McNeill → Port Hardy</div>
         <div class="day-note">Letzter Abschnitt auf Vancouver Island. Morgen: die legendäre Inside Passage! ⛴🌊</div>
-        <div class="day-hotel">🏨 Kwa'lilas Hotel (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Kwa'lilas Hotel (2 Nächte)</div></div><div class="day-diary" id="diary-day-8"><div class="day-diary-entries" id="diary-entries-8"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="9" id="day-card-9">
       <div class="day-num"><div class="num">9</div><div class="wday">Sa</div><div class="ddate">4. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">🌲 Cape Scott</span>
         <div class="day-location">Port Hardy – Ende der Insel</div>
-        <div class="day-note">Cape Scott Provincial Park, nördlichster Punkt Vancouver Islands. Früh schlafen! 🐻</div></div></div>
+        <div class="day-note">Cape Scott Provincial Park, nördlichster Punkt Vancouver Islands. Früh schlafen! 🐻</div></div><div class="day-diary" id="diary-day-9"><div class="day-diary-entries" id="diary-entries-9"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="10" id="day-card-10">
       <div class="day-num"><div class="num">10</div><div class="wday">So</div><div class="ddate">5. Jul</div></div>
       <div class="day-content ferry"><span class="tag tag-ferry">⛴ Inside Passage 16h</span>
         <div class="day-location">⛴ Port Hardy → Prince Rupert</div>
         <div class="day-note">Abfahrt 7:30 Uhr – DER MEGA-TAG! 🐋 Orcas, 🐬 Delfine, 🦅 Adler, 🐻 Bären. Ankunft 23:50 Uhr. Sternenhimmel ⭐</div>
-        <div class="day-hotel">🏨 The Pacific Inn</div></div></div>
+        <div class="day-hotel">🏨 The Pacific Inn</div></div><div class="day-diary" id="diary-day-10"><div class="day-diary-entries" id="diary-entries-10"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="11" id="day-card-11">
       <div class="day-num"><div class="num">11</div><div class="wday">Mo</div><div class="ddate">6. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 350 km</span>
         <div class="day-location">Prince Rupert → Smithers</div>
         <div class="day-note">Fahrt entlang des Skeena Rivers – eine der schönsten Strecken BCs. 🦅🌊</div>
-        <div class="day-hotel">🏨 LDR Lodge – Last Dollar Ranch (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 LDR Lodge – Last Dollar Ranch (2 Nächte)</div></div><div class="day-diary" id="diary-day-11"><div class="day-diary-entries" id="diary-entries-11"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="12" id="day-card-12">
       <div class="day-num"><div class="num">12</div><div class="wday">Di</div><div class="ddate">7. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 370 km</span>
         <div class="day-location">Smithers → Prince George</div>
-        <div class="day-note">Lange Fahrt durch das Herz von BC. Wildnis pur! 🐻🌲</div></div></div>
+        <div class="day-note">Lange Fahrt durch das Herz von BC. Wildnis pur! 🐻🌲</div></div><div class="day-diary" id="diary-day-12"><div class="day-diary-entries" id="diary-entries-12"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="13" id="day-card-13">
       <div class="day-num"><div class="num">13</div><div class="wday">Mi</div><div class="ddate">8. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 295 km</span>
         <div class="day-location">Prince George → Lac La Hache</div>
         <div class="day-note">Gold Rush Trail südwärts ins Cariboo Country. 🍁 Cowboy-Feeling!</div>
-        <div class="day-hotel">🏨 Cariboo Log Guest House (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Cariboo Log Guest House (2 Nächte)</div></div><div class="day-diary" id="diary-day-13"><div class="day-diary-entries" id="diary-entries-13"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="14" id="day-card-14">
       <div class="day-num"><div class="num">14</div><div class="wday">Do</div><div class="ddate">9. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">🏕 Ruhetag</span>
         <div class="day-location">Lac La Hache – Angeln & Entspannen</div>
-        <div class="day-note">Angeln 🎣, Schwimmen, BC Gold Rush Trail erkunden. 🐟🍁</div></div></div>
+        <div class="day-note">Angeln 🎣, Schwimmen, BC Gold Rush Trail erkunden. 🐟🍁</div></div><div class="day-diary" id="diary-day-14"><div class="day-diary-entries" id="diary-entries-14"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="15" id="day-card-15">
       <div class="day-num"><div class="num">15</div><div class="wday">Fr</div><div class="ddate">10. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 190 km</span>
         <div class="day-location">Lac La Hache → Clearwater / Wells Gray</div>
         <div class="day-note">Kanadas geheimster Nationalpark mit hunderten Wasserfällen! 💧🌲🐻</div>
-        <div class="day-hotel">🏨 Jasper Gates Resort (3 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Jasper Gates Resort (3 Nächte)</div></div><div class="day-diary" id="diary-day-15"><div class="day-diary-entries" id="diary-entries-15"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="16" id="day-card-16">
       <div class="day-num"><div class="num">16</div><div class="wday">Sa</div><div class="ddate">11. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">💧 Wasserfälle!</span>
         <div class="day-location">Wells Gray Provincial Park</div>
-        <div class="day-note">Helmcken Falls (141m! 😱), Dawson Falls, Rafting auf dem Clearwater River. 🐻🦌</div></div></div>
+        <div class="day-note">Helmcken Falls (141m! 😱), Dawson Falls, Rafting auf dem Clearwater River. 🐻🦌</div></div><div class="day-diary" id="diary-day-16"><div class="day-diary-entries" id="diary-entries-16"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="17" id="day-card-17">
       <div class="day-num"><div class="num">17</div><div class="wday">So</div><div class="ddate">12. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 360 km</span>
         <div class="day-location">Clearwater → Jasper National Park</div>
-        <div class="day-note">Über den Yellowhead Pass in die Rocky Mountains. 🏔🦌</div></div></div>
+        <div class="day-note">Über den Yellowhead Pass in die Rocky Mountains. 🏔🦌</div></div><div class="day-diary" id="diary-day-17"><div class="day-diary-entries" id="diary-entries-17"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="18" id="day-card-18">
       <div class="day-num"><div class="num">18</div><div class="wday">Mo</div><div class="ddate">13. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">⭐ HIGHLIGHT!</span>
         <div class="day-location">🏔 Jasper National Park</div>
         <div class="day-note">Maligne Lake 💙, Athabasca Gletscher 🧊, Icefields Parkway, Elche 🦌, Bären 🐻. Milchstraße! 🌌</div>
-        <div class="day-hotel">🏨 Sunset Motel Radium</div></div></div>
+        <div class="day-hotel">🏨 Sunset Motel Radium</div></div><div class="day-diary" id="diary-day-18"><div class="day-diary-entries" id="diary-entries-18"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="19" id="day-card-19">
       <div class="day-num"><div class="num">19</div><div class="wday">Di</div><div class="ddate">14. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 Fahrt</span>
         <div class="day-location">Jasper → Radium Hot Springs</div>
         <div class="day-note">Kootenay National Park, Bighornschafe 🐏 direkt an der Straße!</div>
-        <div class="day-hotel">🏨 Sunset Motel (2 Nächte)</div></div></div>
+        <div class="day-hotel">🏨 Sunset Motel (2 Nächte)</div></div><div class="day-diary" id="diary-day-19"><div class="day-diary-entries" id="diary-entries-19"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="20" id="day-card-20">
       <div class="day-num"><div class="num">20</div><div class="wday">Mi</div><div class="ddate">15. Jul</div></div>
       <div class="day-content stay"><span class="tag tag-explore">♨️ Hot Springs!</span>
         <div class="day-location">Radium Hot Springs</div>
-        <div class="day-note">Aquacourt Hot Springs ♨️, Kootenay NP – Marble Canyon, Paint Pots. 🏔</div></div></div>
+        <div class="day-note">Aquacourt Hot Springs ♨️, Kootenay NP – Marble Canyon, Paint Pots. 🏔</div></div><div class="day-diary" id="diary-day-20"><div class="day-diary-entries" id="diary-entries-20"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="21" id="day-card-21">
       <div class="day-num"><div class="num">21</div><div class="wday">Do</div><div class="ddate">16. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 480 km</span>
         <div class="day-location">Radium Hot Springs → Kelowna</div>
         <div class="day-note">Okanagan Valley – Weinland, Obstfarmen, türkisfarbener See. 🍇🌊🍒 Kirschsaison!</div>
-        <div class="day-hotel">🏨 Siesta Suites</div></div></div>
+        <div class="day-hotel">🏨 Siesta Suites</div></div><div class="day-diary" id="diary-day-21"><div class="day-diary-entries" id="diary-entries-21"></div></div></div>
 
-    <div class="day-card">
+    <div class="day-card" data-day="22" id="day-card-22">
       <div class="day-num"><div class="num">22</div><div class="wday">Fr</div><div class="ddate">17. Jul</div></div>
       <div class="day-content travel"><span class="tag tag-drive">🚗 390 km</span><span class="tag tag-arrive" style="margin-left:.4rem">✈ Heimflug</span>
         <div class="day-location">Kelowna → Vancouver → 🏠 Heimflug</div>
         <div class="day-note">Letzter Fahrtag zurück nach Vancouver YVR. Das Abenteuer endet – die Erinnerungen bleiben! 🍁❤️</div>
-        <div class="day-hotel">🏨 Abercorn Hotel, Trademark Collection by Wyndham</div></div></div>
+        <div class="day-hotel">🏨 Abercorn Hotel, Trademark Collection by Wyndham</div></div><div class="day-diary" id="diary-day-22"><div class="day-diary-entries" id="diary-entries-22"></div></div></div>
 
   </div></div>
 </section>
@@ -695,6 +738,9 @@ footer strong { color:var(--red); }
           <option value="❄️">❄️ Schnee</option>
           <option value="🌈">🌈 Regenbogen!</option>
         </select>
+        <select id="newTripDay" style="grid-column:1/-1">
+          <option value="">Tag wählen (wird geladen...)</option>
+        </select>
       </div>
       <textarea class="entry-text" id="newText" placeholder="Was habt ihr heute erlebt? Wie war es? Was war besonders? Schreibt alles auf – ihr werdet es später lieben zu lesen! 🍁"></textarea>
       <div class="photo-preview" id="photoPreview"></div>
@@ -878,6 +924,9 @@ const SUPABASE_URL  = 'https://ehhygjlpgibetstydwnw.supabase.co';
 const SUPABASE_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVoaHlnamxwZ2liZXRzdHlkd253Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzkzNTczODYsImV4cCI6MjA5NDkzMzM4Nn0.URz33fwcAw91b-dW9r7imJq_Dz7D57smgDsHMR0ID5g';
 const DIARY_PASSWORD = 'kanada2026'; // ← Hier euer Passwort ändern!
 
+// Reisedaten: Tag 1 = 26. Juni 2026
+const TRIP_START = new Date('2026-06-26');
+
 const headers = {
   'apikey': SUPABASE_KEY,
   'Authorization': 'Bearer ' + SUPABASE_KEY,
@@ -887,6 +936,18 @@ const headers = {
 
 let currentUser = null;
 let pendingPhotos = [];
+let inlinePendingPhotos = {};
+
+// Berechne welcher Reisetag heute ist (null wenn außerhalb der Reise)
+function getTodayTripDay() {
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const start = new Date(TRIP_START);
+  start.setHours(0,0,0,0);
+  const diff = Math.round((today - start) / 86400000) + 1;
+  if (diff >= 1 && diff <= 22) return diff;
+  return null;
+}
 
 // Login / Logout
 function diaryLogin() {
@@ -900,27 +961,88 @@ function diaryLogin() {
   document.getElementById('diaryGate').style.display    = 'none';
   document.getElementById('diaryContent').style.display = 'block';
   document.getElementById('activeUser').textContent      = user;
+  buildDaySelect();
   loadEntries();
+  renderTimelineDiaryButtons();
 }
 document.getElementById('gatePw').addEventListener('keydown', function(e){ if(e.key==='Enter') diaryLogin(); });
 
 function diaryLogout() {
-  currentUser = null; pendingPhotos = [];
+  currentUser = null; pendingPhotos = []; inlinePendingPhotos = {};
   document.getElementById('diaryGate').style.display    = 'block';
   document.getElementById('diaryContent').style.display = 'none';
   document.getElementById('gatePw').value = '';
   document.getElementById('gateUser').value = '';
+  // Remove inline buttons
+  document.querySelectorAll('.btn-diary-toggle, .inline-form').forEach(function(el){ el.remove(); });
 }
 
-// Fotos vorschauen
-function previewPhotos(input) {
-  pendingPhotos = [];
-  const preview = document.getElementById('photoPreview');
+// ── TIMELINE INTEGRATION ──────────────────────────────────────────
+
+// Rendert "📔 Schreiben"-Buttons unter jeder Tageskarte
+function renderTimelineDiaryButtons() {
+  const todayDay = getTodayTripDay();
+  for (var day = 1; day <= 22; day++) {
+    const slot = document.getElementById('diary-day-' + day);
+    if (!slot) continue;
+    // Avoid duplicates
+    if (slot.querySelector('.btn-diary-toggle')) continue;
+
+    const btn = document.createElement('button');
+    btn.className = 'btn-diary-toggle';
+    btn.setAttribute('data-day', day);
+    btn.innerHTML = '📔 Eintrag schreiben';
+    if (todayDay === day) btn.innerHTML = '📔 Heute schreiben ✨';
+    btn.onclick = (function(d){ return function(){ toggleInlineForm(d); }; })(day);
+    slot.appendChild(btn);
+
+    // Inline form
+    const form = document.createElement('div');
+    form.className = 'inline-form';
+    form.id = 'inline-form-' + day;
+    form.innerHTML =
+      '<textarea id="inline-text-' + day + '" placeholder="Was habt ihr heute erlebt? 🍁"></textarea>' +
+      '<div class="inline-form-row">' +
+        '<select id="inline-weather-' + day + '">' +
+          '<option value="">Wetter...</option>' +
+          '<option value="☀️">☀️ Sonnig</option>' +
+          '<option value="⛅">⛅ Bewölkt</option>' +
+          '<option value="🌧️">🌧️ Regen</option>' +
+          '<option value="⛈️">⛈️ Gewitter</option>' +
+          '<option value="🌫️">🌫️ Nebel</option>' +
+          '<option value="❄️">❄️ Schnee</option>' +
+          '<option value="🌈">🌈 Regenbogen!</option>' +
+        '</select>' +
+        '<label class="inline-photo-label">📷 Fotos' +
+          '<input type="file" accept="image/*" multiple onchange="inlinePreviewPhotos(this,' + day + ')" />' +
+        '</label>' +
+        '<button class="btn-inline-save" onclick="submitInlineEntry(' + day + ')">Speichern 🍁</button>' +
+        '<button class="btn-inline-cancel" onclick="toggleInlineForm(' + day + ')">Abbrechen</button>' +
+        '<span class="inline-status" id="inline-status-' + day + '"></span>' +
+      '</div>' +
+      '<div id="inline-photo-preview-' + day + '" style="display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.5rem;"></div>';
+    slot.appendChild(form);
+  }
+}
+
+function toggleInlineForm(day) {
+  const form = document.getElementById('inline-form-' + day);
+  if (!form) return;
+  form.classList.toggle('open');
+  if (form.classList.contains('open')) {
+    document.getElementById('inline-text-' + day).focus();
+  }
+}
+
+function inlinePreviewPhotos(input, day) {
+  inlinePendingPhotos[day] = [];
+  const preview = document.getElementById('inline-photo-preview-' + day);
   preview.innerHTML = '';
   Array.from(input.files).forEach(function(file) {
     const reader = new FileReader();
     reader.onload = function(e) {
-      pendingPhotos.push({ name: file.name, data: e.target.result });
+      if (!inlinePendingPhotos[day]) inlinePendingPhotos[day] = [];
+      inlinePendingPhotos[day].push(e.target.result);
       const img = document.createElement('img');
       img.src = e.target.result;
       img.className = 'photo-thumb';
@@ -930,33 +1052,129 @@ function previewPhotos(input) {
   });
 }
 
-// Eintrag speichern
+async function submitInlineEntry(day) {
+  const text    = document.getElementById('inline-text-' + day).value.trim();
+  const weather = document.getElementById('inline-weather-' + day).value;
+  const status  = document.getElementById('inline-status-' + day);
+  if (!text) { status.textContent = 'Bitte etwas schreiben!'; return; }
+
+  status.textContent = 'Speichern...';
+  const photos = (inlinePendingPhotos[day] || []);
+
+  // Get location from the day-card
+  const card = document.getElementById('day-card-' + day);
+  const locEl = card ? card.querySelector('.day-location') : null;
+  const location = locEl ? locEl.textContent.trim() : 'Tag ' + day;
+
+  const entry = {
+    author:     currentUser,
+    location:   location,
+    weather:    weather || '',
+    text:       text,
+    photos:     JSON.stringify(photos),
+    trip_day:   day,
+    created_at: new Date().toISOString()
+  };
+
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/diary_entries', {
+      method: 'POST', headers: headers, body: JSON.stringify(entry)
+    });
+    if (!res.ok) throw new Error(await res.text());
+    status.textContent = '✅ Gespeichert!';
+    document.getElementById('inline-text-' + day).value = '';
+    document.getElementById('inline-weather-' + day).value = '';
+    document.getElementById('inline-photo-preview-' + day).innerHTML = '';
+    inlinePendingPhotos[day] = [];
+    setTimeout(function(){ status.textContent = ''; toggleInlineForm(day); }, 1500);
+    loadEntries();
+  } catch(e) {
+    status.textContent = '⚠️ ' + e.message;
+  }
+}
+
+// ── HAUPT-TAGEBUCH ────────────────────────────────────────────────
+
+// Tag-Auswahl im Hauptformular
+function buildDaySelect() {
+  const days = [
+    ['1','Tag 1 · Fr, 26. Jun · Vancouver → Nanaimo'],
+    ['2','Tag 2 · Sa, 27. Jun · Nanaimo → Ucluelet'],
+    ['3','Tag 3 · So, 28. Jun · Ucluelet & Pacific Rim NP'],
+    ['4','Tag 4 · Mo, 29. Jun · Ucluelet → Campbell River'],
+    ['5','Tag 5 · Di, 30. Jun · Campbell River'],
+    ['6','Tag 6 · Mi, 1. Jul · Campbell River → Port McNeill'],
+    ['7','Tag 7 · Do, 2. Jul · Port McNeill & Telegraph Cove'],
+    ['8','Tag 8 · Fr, 3. Jul · Port McNeill → Port Hardy'],
+    ['9','Tag 9 · Sa, 4. Jul · Port Hardy – Cape Scott'],
+    ['10','Tag 10 · So, 5. Jul · Inside Passage Fähre ⛴'],
+    ['11','Tag 11 · Mo, 6. Jul · Prince Rupert → Smithers'],
+    ['12','Tag 12 · Di, 7. Jul · Smithers → Prince George'],
+    ['13','Tag 13 · Mi, 8. Jul · Prince George → Lac La Hache'],
+    ['14','Tag 14 · Do, 9. Jul · Lac La Hache – Ruhetag'],
+    ['15','Tag 15 · Fr, 10. Jul · Lac La Hache → Clearwater'],
+    ['16','Tag 16 · Sa, 11. Jul · Wells Gray Provincial Park'],
+    ['17','Tag 17 · So, 12. Jul · Clearwater → Jasper'],
+    ['18','Tag 18 · Mo, 13. Jul · Jasper National Park ⭐'],
+    ['19','Tag 19 · Di, 14. Jul · Jasper → Radium Hot Springs'],
+    ['20','Tag 20 · Mi, 15. Jul · Radium Hot Springs'],
+    ['21','Tag 21 · Do, 16. Jul · Radium → Kelowna'],
+    ['22','Tag 22 · Fr, 17. Jul · Kelowna → Vancouver → Heimflug'],
+  ];
+  const sel = document.getElementById('newTripDay');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">Tag wählen (oder leer lassen)</option>';
+  const todayDay = getTodayTripDay();
+  days.forEach(function(d) {
+    const opt = document.createElement('option');
+    opt.value = d[0];
+    opt.textContent = d[1] + (parseInt(d[0]) === todayDay ? ' ← Heute!' : '');
+    if (parseInt(d[0]) === todayDay) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// Fotos vorschauen (Hauptformular)
+function previewPhotos(input) {
+  pendingPhotos = [];
+  const preview = document.getElementById('photoPreview');
+  preview.innerHTML = '';
+  Array.from(input.files).forEach(function(file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      pendingPhotos.push(e.target.result);
+      const img = document.createElement('img');
+      img.src = e.target.result;
+      img.className = 'photo-thumb';
+      preview.appendChild(img);
+    };
+    reader.readAsDataURL(file);
+  });
+}
+
+// Eintrag speichern (Hauptformular)
 async function submitEntry() {
   const location = document.getElementById('newLocation').value.trim();
   const weather  = document.getElementById('newWeather').value;
   const text     = document.getElementById('newText').value.trim();
+  const tripDay  = document.getElementById('newTripDay') ? parseInt(document.getElementById('newTripDay').value) || null : null;
   const status   = document.getElementById('entryStatus');
   if (!text) { status.textContent = 'Bitte etwas schreiben!'; return; }
-
   status.textContent = 'Wird gespeichert...';
-
-  // Fotos als Base64 direkt in der DB speichern (für kleine Fotos gut geeignet)
-  const photos = pendingPhotos.map(function(p){ return p.data; });
 
   const entry = {
     author:   currentUser,
     location: location || 'Unterwegs 🍁',
     weather:  weather  || '',
     text:     text,
-    photos:   JSON.stringify(photos),
+    photos:   JSON.stringify(pendingPhotos),
+    trip_day: tripDay,
     created_at: new Date().toISOString()
   };
 
   try {
     const res = await fetch(SUPABASE_URL + '/rest/v1/diary_entries', {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(entry)
+      method: 'POST', headers: headers, body: JSON.stringify(entry)
     });
     if (!res.ok) throw new Error(await res.text());
     status.textContent = '✅ Gespeichert!';
@@ -965,59 +1183,97 @@ async function submitEntry() {
     document.getElementById('newText').value     = '';
     document.getElementById('photoPreview').innerHTML = '';
     document.getElementById('photoInput').value  = '';
+    if (document.getElementById('newTripDay')) document.getElementById('newTripDay').value = '';
     pendingPhotos = [];
     setTimeout(function(){ status.textContent = ''; }, 3000);
     loadEntries();
   } catch(e) {
     status.textContent = '⚠️ Fehler: ' + e.message;
-    console.error(e);
   }
 }
 
 // Einträge laden
 async function loadEntries() {
   const list = document.getElementById('entriesList');
-  list.innerHTML = '<div class="loading-entries">Einträge werden geladen... 🍁</div>';
+  if (list) list.innerHTML = '<div class="loading-entries">Einträge werden geladen... 🍁</div>';
   try {
     const res = await fetch(
-      SUPABASE_URL + '/rest/v1/diary_entries?order=created_at.desc&limit=100',
+      SUPABASE_URL + '/rest/v1/diary_entries?order=created_at.asc&limit=200',
       { headers: headers }
     );
     if (!res.ok) throw new Error(await res.text());
     const entries = await res.json();
     renderEntries(entries);
+    renderInlineEntries(entries);
   } catch(e) {
-    list.innerHTML = '<div class="no-entries">⚠️ Einträge konnten nicht geladen werden.<br><small>' + e.message + '</small></div>';
+    if (list) list.innerHTML = '<div class="no-entries">⚠️ Einträge konnten nicht geladen werden.<br><small>' + e.message + '</small></div>';
   }
 }
 
+// Haupt-Tagebuch (Übersicht im Tagebuch-Abschnitt)
 function renderEntries(entries) {
   const list = document.getElementById('entriesList');
+  if (!list) return;
   if (!entries.length) {
-    list.innerHTML = '<div class="no-entries">Noch keine Einträge – seid ihr der erste? 🍁<br><small>Schreibt euren ersten Tagebucheintrag oben!</small></div>';
+    list.innerHTML = '<div class="no-entries">Noch keine Einträge – seid ihr der erste? 🍁<br><small>Schreibt euren ersten Tagebucheintrag oben oder direkt bei einem Tag in der Timeline!</small></div>';
     return;
   }
-  list.innerHTML = entries.map(function(e) {
+  // Show newest first
+  const sorted = entries.slice().sort(function(a,b){ return new Date(b.created_at)-new Date(a.created_at); });
+  list.innerHTML = sorted.map(function(e) {
     const d    = new Date(e.created_at);
-    const date = d.toLocaleDateString('de-DE', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    const date = d.toLocaleDateString('de-DE', { weekday:'long', day:'numeric', month:'long' });
     const time = d.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
     let photos = [];
     try { photos = JSON.parse(e.photos || '[]'); } catch(_){}
-    const photoHTML = photos.map(function(src, i) {
-      return '<img class="entry-photo" src="' + src + '" alt="Foto ' + (i+1) + '" onclick="openLightbox(this.src)" />';
+    const photoHTML = photos.map(function(src,i){
+      return '<img class="entry-photo" src="'+src+'" alt="Foto '+(i+1)+'" onclick="openLightbox(this.src)" />';
     }).join('');
+    const dayBadge = e.trip_day ? '<span style="background:var(--forest);color:#fff;border-radius:4px;padding:.1rem .5rem;font-size:.7rem;margin-left:.5rem;">Tag '+e.trip_day+'</span>' : '';
     return '<div class="entry-card">' +
       '<div class="entry-card-header">' +
         '<div class="entry-meta">' +
-          '<div class="entry-location">📍 ' + escHtml(e.location) + '</div>' +
-          '<div class="entry-date-author">✍️ ' + escHtml(e.author) + ' · ' + date + ' · ' + time + ' Uhr</div>' +
+          '<div class="entry-location">📍 '+escHtml(e.location)+dayBadge+'</div>' +
+          '<div class="entry-date-author">✍️ '+escHtml(e.author)+' · '+date+' · '+time+' Uhr</div>' +
         '</div>' +
-        '<div class="entry-weather">' + (e.weather || '') + '</div>' +
+        '<div class="entry-weather">'+(e.weather||'')+'</div>' +
       '</div>' +
-      '<div class="entry-body">' + escHtml(e.text) + '</div>' +
-      (photoHTML ? '<div class="entry-photos">' + photoHTML + '</div>' : '') +
+      '<div class="entry-body">'+escHtml(e.text)+'</div>' +
+      (photoHTML ? '<div class="entry-photos">'+photoHTML+'</div>' : '') +
     '</div>';
   }).join('');
+}
+
+// Inline-Einträge in die Timeline rendern
+function renderInlineEntries(entries) {
+  // Clear all inline entry containers
+  for (var d = 1; d <= 22; d++) {
+    const c = document.getElementById('diary-entries-' + d);
+    if (c) c.innerHTML = '';
+  }
+  entries.forEach(function(e) {
+    if (!e.trip_day) return;
+    const container = document.getElementById('diary-entries-' + e.trip_day);
+    if (!container) return;
+    const dt = new Date(e.created_at);
+    const time = dt.toLocaleTimeString('de-DE', { hour:'2-digit', minute:'2-digit' });
+    let photos = [];
+    try { photos = JSON.parse(e.photos || '[]'); } catch(_){}
+    const photoHTML = photos.map(function(src,i){
+      return '<img class="inline-entry-photo" src="'+src+'" alt="Foto '+(i+1)+'" onclick="openLightbox(this.src)" />';
+    }).join('');
+    const div = document.createElement('div');
+    div.className = 'inline-entry';
+    div.innerHTML =
+      '<div class="inline-entry-header">' +
+        '<span class="inline-entry-author">✍️ '+escHtml(e.author)+'</span>' +
+        (e.weather ? '<span class="inline-entry-weather">'+e.weather+'</span>' : '') +
+        '<span class="inline-entry-time">'+time+' Uhr</span>' +
+      '</div>' +
+      '<div class="inline-entry-text">'+escHtml(e.text)+'</div>' +
+      (photoHTML ? '<div class="inline-entry-photos">'+photoHTML+'</div>' : '');
+    container.appendChild(div);
+  });
 }
 
 function escHtml(s) {
@@ -1032,6 +1288,31 @@ function openLightbox(src) {
 function closeLightbox() {
   document.getElementById('lightbox').classList.remove('open');
 }
+
+// Einträge auch ohne Login laden (nur lesen)
+(async function() {
+  try {
+    const res = await fetch(
+      SUPABASE_URL + '/rest/v1/diary_entries?order=created_at.asc&limit=200',
+      { headers: { 'apikey': SUPABASE_KEY, 'Authorization': 'Bearer ' + SUPABASE_KEY } }
+    );
+    if (res.ok) {
+      const entries = await res.json();
+      renderInlineEntries(entries);
+    }
+  } catch(_){}
+})();
+
+const headers = {
+  'apikey': SUPABASE_KEY,
+  'Authorization': 'Bearer ' + SUPABASE_KEY,
+  'Content-Type': 'application/json',
+  'Prefer': 'return=representation'
+};
+
+let currentUser = null;
+let pendingPhotos = [];
+
 
 const cards = document.querySelectorAll('.day-card');
 const obs = new IntersectionObserver(function(entries) {
