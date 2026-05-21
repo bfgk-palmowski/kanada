@@ -265,9 +265,9 @@ footer strong { color:var(--red); }
 .inline-entry-weather { font-size:1rem; }
 .inline-entry-loc { font-size:.73rem; color:#888; font-style:italic; }
 .inline-entry-time { font-size:.7rem; color:#aaa; margin-left:auto; }
-.btn-delete-entry { background:none; border:none; color:#e74c3c; font-size:.75rem; cursor:pointer;
-  opacity:0.5; padding:.1rem .3rem; border-radius:4px; transition:opacity .2s; margin-left:.3rem; }
-.btn-delete-entry:hover { opacity:1; background:rgba(231,76,60,.1); }
+.btn-delete-entry { background:rgba(231,76,60,.15); border:1px solid rgba(231,76,60,.4); color:#e74c3c; font-size:.75rem; cursor:pointer;
+  opacity:0.8; padding:.2rem .5rem; border-radius:4px; transition:all .2s; margin-left:.3rem; }
+.btn-delete-entry:hover { opacity:1; background:rgba(231,76,60,.3); }
 .inline-entry-text { line-height:1.55; color:#444; white-space:pre-wrap; }
 .inline-entry-photos { display:flex; gap:.4rem; flex-wrap:wrap; margin-top:.5rem; }
 .inline-entry-photo { width:80px; height:60px; object-fit:cover; border-radius:5px;
@@ -1233,7 +1233,7 @@ function renderEntries(entries) {
       return '<img class="entry-photo" src="'+src+'" alt="Foto '+(i+1)+'" onclick="openLightbox(this.src)" />';
     }).join('');
     const dayBadge = e.trip_day ? '<span style="background:var(--forest);color:#fff;border-radius:4px;padding:.1rem .5rem;font-size:.7rem;margin-left:.5rem;">Tag '+e.trip_day+'</span>' : '';
-    const deleteBtn = (currentUser === e.author) ? '<button class="btn-delete-entry" onclick="deleteEntry('+e.id+',this)" title="Eintrag löschen">🗑</button>' : '';
+    const deleteBtn = (currentUser === e.author) ? '<button class="btn-delete-entry" onclick="deleteEntry('+e.id+',this)">🗑 Löschen</button>' : '';
     return '<div class="entry-card">' +
       '<div class="entry-card-header">' +
         '<div class="entry-meta">' +
@@ -1269,7 +1269,7 @@ function renderInlineEntries(entries) {
     const photoHTML = photos.map(function(src,i){
       return '<img class="inline-entry-photo" src="'+src+'" alt="Foto '+(i+1)+'" onclick="openLightbox(this.src)" />';
     }).join('');
-    const deleteBtn = (currentUser && currentUser === e.author) ? '<button class="btn-delete-entry" onclick="deleteEntry('+e.id+',this)" title="Löschen">🗑</button>' : '';
+    const deleteBtn = (currentUser && currentUser === e.author) ? '<button class="btn-delete-entry" onclick="deleteEntry('+e.id+',this)">🗑 Löschen</button>' : '';
     const div = document.createElement('div');
     div.className = 'inline-entry';
     div.setAttribute('data-entry-id', e.id);
@@ -1289,15 +1289,26 @@ function renderInlineEntries(entries) {
 async function deleteEntry(id, btn) {
   if (!confirm('Eintrag wirklich löschen?')) return;
   btn.textContent = '...';
+  btn.disabled = true;
   try {
     const res = await fetch(SUPABASE_URL + '/rest/v1/diary_entries?id=eq.' + id, {
-      method: 'DELETE', headers: headers
+      method: 'DELETE',
+      headers: {
+        'apikey': SUPABASE_KEY,
+        'Authorization': 'Bearer ' + SUPABASE_KEY,
+        'Content-Type': 'application/json'
+      }
     });
     if (!res.ok) throw new Error(await res.text());
+    // Remove from DOM immediately
+    const card = btn.closest('.entry-card, .inline-entry');
+    if (card) card.remove();
+    // Also reload to sync everything
     loadEntries();
   } catch(e) {
-    btn.textContent = '🗑';
-    alert('Fehler: ' + e.message);
+    btn.textContent = '🗑 Löschen';
+    btn.disabled = false;
+    alert('Fehler beim Löschen: ' + e.message);
   }
 }
 
